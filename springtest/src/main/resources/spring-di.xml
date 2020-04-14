@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       https://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/util
+       https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+
+    <!-- 从properties属性文件中引入属性值 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="${prop.user}"/>
+        <property name="password" value="${prop.password}"/>
+        <property name="jdbcUrl" value="${prop.url}"/>
+        <property name="driverClass" value="${prop.driverClass}"/>
+    </bean>
+
+    <!-- set 注入 -->
+    <bean id="car" class="com.sp.vo.Car">
+        <property name="brand" value="audi" />
+        <property name="crop" value="yiqi" />
+        <property name="price" value="400000" />
+    </bean>
+    <!-- 构造器植入 -->
+    <bean id="car2" class="com.sp.vo.Car">
+        <constructor-arg value="benz" />
+        <constructor-arg value="Merdiscie" />
+        <constructor-arg value="600000" />
+    </bean>
+
+
+    <bean id="book" class="com.sp.vo.Book">
+        <property name="bookId" value="109302" />
+        <property name="bookName" >
+            <value><![CDATA[qqqkifni]]></value>
+        </property>
+    </bean>
+
+    <!-- 配置单利集合bean 以供多个bean引用，需要导入Util命名空间-->
+
+    <bean id="person" class="com.sp.vo.Person">
+        <property name="name" value="Tom" />
+        <property name="age" value="32" />
+        <property name="car" ref="car" />
+    </bean>
+
+
+    <!-- LIST -->
+    <bean id="personList" class="com.sp.vo.PersonList">
+        <property name="name" value="Tom" />
+        <property name="cars" ref="listBean">
+
+
+
+        </property>
+    </bean>
+
+    <!-- Map-->
+    <bean id="personMap" class="com.sp.vo.PersonMap">
+        <property name="name" value="Jack" />
+        <property name="cars">
+            <map>
+                <entry key="AA" value-ref="car" />
+                <entry key="bb" value-ref="car2" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- 定义成集合bean ，不管有几个bean都可以用ref调用 -->
+    <util:list id="listBean">
+        <ref bean="car" />
+        <ref bean="car2" />
+    </util:list>
+
+
+
+</beans>

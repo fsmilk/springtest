@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- C3P0 连接
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/mysql" />
+        <property name="user" value="root" />
+        <property name="password" value="123456" />
+        <property name="initialPoolSize" value="10" />
+        <property name="maxPoolSize" value="20" />
+    </bean>
+-->
+    <!-- 外部文件属性配置c3p0
+        classpath*  从多个类路径下引用
+        第一种方法
+
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="location" value="classpath*:jdbc.properties" />
+    </bean>
+    -->
+    <!-- 第二种方法 推荐 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${prop.driverClass}" />
+        <property name="jdbcUrl" value="${prop.url}" />
+        <property name="user" value="${prop.user}" />
+        <property name="password" value="${prop.password}" />
+
+    </bean>
+
+
+</beans>

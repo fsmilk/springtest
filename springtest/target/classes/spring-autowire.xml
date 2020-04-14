@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="car" class="com.sp02.autowire.Car">
+        <property name="brand" value="audi" />
+        <property name="price" value="600000" />
+    </bean>
+
+    <bean id="address" class="com.sp02.autowire.Address">
+        <property name="province" value="Guangdong" />
+        <property name="city" value="guangzhou" />
+    </bean>
+    <!-- 自动装配
+        byName:使用bean的属性名与IOC容器中的bean的id进行匹配。（拿上可以装配的属性的名字到IOC容器中找跟属性名一样的bean）
+        byType：使用bean的属性的类型与IOC容器中的bean的class进行匹配，唯一匹配就是匹配成功，多个匹配则抛出异常
+
+        问题：一装配就全装配，不能单个装配。不能同时支配两个模式
+        解决：使用注解进行自动装配。也是真正用注解来做自动装配
+
+    -->
+    <bean id="person" class="com.sp02.autowire.Person" autowire="byName">
+        <property name="name" value="jack" />
+    </bean>
+</beans>

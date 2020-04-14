@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        abstarct = true  抽象bean 不能创建对象，class可以省略不配置
+        单纯简单通用配置然后继承
+        继承可以从父bean继承一些配置，但id abstract autowired 不能继承
+        父bean不写类，子类必须有
+    -->
+    <bean id="addr1" abstract="true">
+        <property name="city" value="beiging" />
+        <property name="street" value="changanjie" />
+    </bean>
+
+    <!-- 继承 -->
+    <bean id="addr2" class="com.sp.relation.Address" parent="addr1">
+        <property name="street" value="tiananmen" />
+    </bean>
+
+    <!-- 依赖
+        必须有A才能生成B
+        跟继承不同
+    -->
+    <bean id="addr3" class="com.sp.relation.Address" parent="addr1" depends-on="addr4">
+    </bean>
+
+    <bean id="addr4" class="com.sp.relation.Address"></bean>
+
+</beans>

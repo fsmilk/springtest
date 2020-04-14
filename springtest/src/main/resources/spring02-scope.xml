@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean 作用域
+        singletion：在ioc容器中设置的bean都是单例。不能通过new创建对象。在整个IOC容器中只能存在一个bean的对象
+        而且在IOC容器对象被创建时，就创建单例bean的对象。后续每次通过getBean获取bean对象时返回都是同一个对象
+
+        prototype:原型，多例。创建两次对象不同。在整个IOC容器中可以有多个bean对象，在IOC容器对象被创建时
+        不会创建原型的bean对象。而是登报每次通过getBean获取bean时才会创建一个新的bean对象返回
+
+        request：只用于web，WebApplicationContext 。一次请求对应一个bean对象
+        session：会话包含多次请求。不同的HTTP Session 使用不同的Bean。一次会话对应一个bean对象
+
+    -->
+
+    <bean id="car" class="com.sp02.vo.Car" scope="prototype">
+        <property name="brand" value="audi" />
+        <property name="price" value="500000" />
+    </bean>
+</beans>
